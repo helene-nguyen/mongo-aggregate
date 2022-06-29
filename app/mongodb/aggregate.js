@@ -1,5 +1,4 @@
 //~import module
-import { log } from 'console';
 import { MongoClient } from 'mongodb';
 
 //~connexion
@@ -170,11 +169,26 @@ const client = new MongoClient(url);
             //   source : https://stackoverflow.com/questions/39389823/mongodb-query-with-multiple-conditions
             '_id.year': { $eq: 2019 }
           }
+        },
+        {
+          $project: {
+            date: '$_id',
+            count: 1,
+            _id: 0
+          }
         }
       ])
       .toArray();
     console.log('___________________________________________________________');
     console.log('Visitors more precisely : ', resultVisitJuneAgg);
+      // {
+        //   $match: {
+        //     date: {
+        //       $gte: new Date('2019-06-01'),
+        //       $lt: new Date('2019-07-01')
+        //     }
+        //   }
+        // },
     console.log('___________________________________________________________');
 
     //& Categories
