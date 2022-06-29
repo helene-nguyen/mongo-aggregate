@@ -1,0 +1,23 @@
+{
+  "type": "module",
+  "name": "data-mongodb-helene-nguyen",
+  "version": "1.0.0",
+  "description": "Dariusz vous a envoyé une extraction des données de son parc sur l'année 2019. Il s'agit de toutes les visites d'attraction de chaque visiteur de chaque jour de l'année :boom:",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/O-clock-Cassini/Data-mongodb-helene-nguyen.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/O-clock-Cassini/Data-mongodb-helene-nguyen/issues"
+  },
+  "homepage": "https://github.com/O-clock-Cassini/Data-mongodb-helene-nguyen#readme",
+  "dependencies": {
+    "mongodb": "^4.7.0"
+  }
+}
