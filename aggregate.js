@@ -173,14 +173,16 @@ const client = new MongoClient(url);
         }
       ])
       .toArray();
-
-    console.log(resultVisitJuneAgg);
+    console.log('___________________________________________________________');
+    console.log('Visitors more precisely : ', resultVisitJuneAgg);
+    console.log('___________________________________________________________');
 
     //& Categories
     console.time('Performance category :');
     const resultCategoryAgg = await ridesCollection
       .aggregate([
         {
+          //^create a projection
           $project: {
             _id: 0,
             Name: '$f1',
@@ -193,25 +195,31 @@ const client = new MongoClient(url);
                   $cond: [
                     { $in: ['$f1', ['Sequelizigzag', 'Eventropico', 'le Manoir des Vieux Clous', 'Coup de fourchette']] },
                     'Family',
-                    {
-                      $cond: [{ $in: ['$f1', [`la Tour de l'Array`, 'les auto-DOMponneuses', `l'EJS Palace`]] }, 'Sensations', '']
-                    }
+                    { $cond: [{ $in: ['$f1', [`la Tour de l'Array`, 'les auto-DOMponneuses', `l'EJS Palace`]] }, 'Sensations', ''] }
                   ]
                 }
               ]
             }
           }
         },
+        //^Group by category
         {
           $group: {
             _id: '$Category',
             count: { $sum: 1 }
-          },
+          }
+        },
+        {
+          $project: {
+            Category: '$_id',
+            count: 1,
+            _id: 0
+          }
         }
       ])
       .toArray();
 
-    console.log('resultCategoryAgg: ', resultCategoryAgg);
+    console.log('Visitors by category : ', resultCategoryAgg);
     console.timeEnd('Performance category :');
   } finally {
     // Ensures that the client will close when you finish/error
