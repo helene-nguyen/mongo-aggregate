@@ -186,12 +186,27 @@ const client = new MongoClient(url);
             Name: '$f1',
             Category: {
               //! another way to write => $eq: { if: {}, then:,else: }
-                $cond: [{ $in: ['$f1', ['ES6 Tycoon', 'APIttoresque', 'Promise cuitée', 'le Node Express']] }, 'Children',
-                {$cond: [{ $in: ['$f1', ['Sequelizigzag', 'Eventropico', 'le Manoir des Vieux Clous', 'Coup de fourchette']] }, 'Family',
-                {$cond: [{ $in: ['$f1', [ `la Tour de l'Array`, 'les auto-DOMponneuses', `l'EJS Palace`]] }, 'Sensations',
-                '']}]}]
+              $cond: [
+                { $in: ['$f1', ['ES6 Tycoon', 'APIttoresque', 'Promise cuitée', 'le Node Express']] },
+                'Children',
+                {
+                  $cond: [
+                    { $in: ['$f1', ['Sequelizigzag', 'Eventropico', 'le Manoir des Vieux Clous', 'Coup de fourchette']] },
+                    'Family',
+                    {
+                      $cond: [{ $in: ['$f1', [`la Tour de l'Array`, 'les auto-DOMponneuses', `l'EJS Palace`]] }, 'Sensations', '']
+                    }
+                  ]
+                }
+              ]
             }
           }
+        },
+        {
+          $group: {
+            _id: '$Category',
+            count: { $sum: 1 }
+          },
         }
       ])
       .toArray();
