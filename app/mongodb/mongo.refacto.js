@@ -1,106 +1,97 @@
 //~import modules
 import { client } from '../../app/database.js';
 
-//~module
-const testMongo = {
-  //^Initialization
-  init() {
-    // this.fetchAllRides();
-    this.fetchOneRide();
-  },
-  //^Methods
-  async fetchAllRides(req, res) {
-    try {
-      //   await client.connect();
-      const db = client.db('oparc');
 
-      const ridesCollection = db.collection('rides');
+//^Methods
+async function fetchAllRides(req, res) {
+  try {
+    //   await client.connect();
+    const db = client.db('oparc');
 
-      const findAllrides = await ridesCollection.find().toArray();
+    const ridesCollection = db.collection('rides');
 
-      // console.log("findAllrides: ", findAllrides);
+    const findAllrides = await ridesCollection.find().toArray();
 
-      //   await client.close();
-      // console.log('Connexion closed !');
-    } catch (err) {
-      res.status(500);
-      console.log(err.message);
-    }
-  },
+    // console.log("findAllrides: ", findAllrides);
 
-  async fetchOneRide(req, res) {
-    try {
-      console.log('test');
-      await client.connect();
+    //   await client.close();
+    // console.log('Connexion closed !');
+  } catch (err) {
+    res.status(500);
+    console.log(err.message);
+  }
+}
 
-      const db = client.db('oparc');
+async function fetchOneRide(req, res) {
+  try {
+    await client.connect();
 
-      const ridesCollection = db.collection('rides');
+    const db = client.db('oparc');
 
-      const findOneride = await ridesCollection.find({ f1: 'APIttoresque' }, { f2: 1, _id: 0 }).toArray();
+    const ridesCollection = db.collection('rides');
 
-      console.log('findOneride: ', findOneride);
+    const findOneride = await ridesCollection.find({ event: 'APIttoresque' }, { f2: 1, _id: 0 }).toArray();
 
-      await client.close();
-      // console.log('Connexion closed !');
-    } catch (err) {
-      res.status(500);
-      console.log(err.message);
-    }
-  },
+    console.log('findOneride: ', findOneride);
 
-  async createRide() {
-    try {
-      console.log('test');
-      await client.connect();
+    await client.close();
+    // console.log('Connexion closed !');
+  } catch (err) {
+    res.status(500);
+    console.log(err.message);
+  }
+}
 
-      const db = client.db('oparc');
+async function createRide() {
+  try {
+    await client.connect();
 
-      const ridesCollection = db.collection('rides');
+    const db = client.db('oparc');    
 
-      await ridesCollection.insertOne({f1: "les auto-DOMponneuses", f2: "000000000012d5f5", catapulte: "À rouleeeettes"});
+    const ridesCollection = db.collection('rides');
 
-      await client.close();
-      // console.log('Connexion closed !');
-    } catch (err) {
-      res.status(500);
-      console.log(err.message);
-    }
-    },
-  
-    async updateMany() {
-        try {
-            await client.connect();
-      
-            const db = client.db('oparc');
-      
-            const ridesCollection = db.collection('rides');
-      
-            await ridesCollection.updateMany({}, { $rename: { f1: "event", f2: "visitor", f3: "timestamp" }});
-      
-            await client.close();
-          } catch (err) {
-            res.status(500);
-            console.log(err.message);
-          }
-    },
+    await ridesCollection.insertOne({f1: "les auto-DOMponneuses", f2: "000000000012d5f5", catapulte: "À rouleeeettes"});
+
+    await client.close();
+    // console.log('Connexion closed !');
+  } catch (err) {
+    res.status(500);
+    console.log(err.message);
+  }
+  }
+
+  async function updateMany() {
+      try {
+          await client.connect();
     
-    async deleteMany() { 
-        try {
-            await client.connect();
-      
-            const db = client.db('oparc');
-      
-            const ridesCollection = db.collection('rides');
-      
-            await ridesCollection.deleteMany({catapulte: "À rouleeeettes"});
-      
-            await client.close();
-          } catch (err) {
-            res.status(500);
-            console.log(err.message);
-          }
-    }
-};
+          const db = client.db('oparc');
+    
+          const ridesCollection = db.collection('rides');
+    
+          await ridesCollection.updateMany({}, { $rename: { f1: "event", f2: "visitor", f3: "timestamp" }});
+    
+          await client.close();
+        } catch (err) {
+          res.status(500);
+          console.log(err.message);
+        }
+  };
+  
+  async function deleteMany() { 
+      try {
+          await client.connect();
+    
+          const db = client.db('oparc');
+    
+          const ridesCollection = db.collection('rides');
+    
+          await ridesCollection.deleteMany({catapulte: "À rouleeeettes"});
+    
+          await client.close();
+        } catch (err) {
+          res.status(500);
+          console.log(err.message);
+        }
+  };
 
-export { testMongo };
+export { fetchAllRides, fetchOneRide, createRide, updateMany, deleteMany };

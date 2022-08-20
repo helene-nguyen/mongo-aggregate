@@ -3,12 +3,9 @@ import 'dotenv/config';
 
 //~import modules
 import express from 'express';
-import { testMongo } from './app/mongodb/mongo.refacto.js';
 const app = express();
 
-// app.use(testMongo.fetchAllRides);
-// app.use(testMongo.fetchOneRide);
-// app.use(testMongo.updateMany);
+import { router } from './app/routes.js'
 
 //~launch app
 const PORT = process.env.PORT ?? 3000;
