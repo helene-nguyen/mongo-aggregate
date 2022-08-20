@@ -2,9 +2,9 @@
 import { MongoClient } from 'mongodb';
 
 //~connexion
-const url = 'mongodb://127.0.0.1:27017';
+// const url = 'mongodb://127.0.0.1:27017';
 
-const client = new MongoClient(url);
+// const client = new MongoClient(url);
 
 (async function() {
   try {
